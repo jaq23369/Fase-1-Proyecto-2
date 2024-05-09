@@ -1,48 +1,58 @@
-from neo4j import GraphDatabase # type: ignore
+from neo4j import GraphDatabase  # type: ignore
+
 
 class HealthRecommendationSystem:
     def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
-
-    def close(self):
-        self.driver.close()
+        self._conexion = GraphDatabase.driver(uri, auth=(user, password))
 
     def solicitarSexoUsuario(self):
         return input("Indique su sexo (Hombre/Mujer): ")
 
     def realizarEncuesta(self, sexo):
+        datos_generales = self.preguntasGenerales()
+        if sexo == 'Hombre':
+            datos_especificos = self.preguntasEspecificasHombres()
+        elif sexo == 'Mujer':
+            datos_especificos = self.preguntasEspecificasMujeres()
+        return {**datos_generales, **datos_especificos}
+
+    def preguntasGenerales(self):
         datos = {}
         datos['edad'] = input("Ingrese su edad: ")
         datos['peso'] = input("Ingrese su peso: ")
-        if sexo == 'Hombre':
-            datos['nivel_actividad'] = input("Nivel de actividad física para hombres (bajo/medio/alto): ")
-        elif sexo == 'Mujer':
-            datos['nivel_actividad'] = input("Nivel de actividad física para mujeres (bajo/medio/alto): ")
+        # Continuar con otras preguntas generales
+        return datos
+
+    def preguntasEspecificasHombres(self):
+        datos = {}
+        datos['nivel_actividad'] = input("Nivel de actividad física (bajo/medio/alto): ")
+        # Continuar con otras preguntas específicas para hombres
+        return datos
+
+    def preguntasEspecificasMujeres(self):
+        datos = {}
+        datos['nivel_actividad'] = input("Nivel de actividad física (bajo/medio/alto): ")
+        # Continuar con otras preguntas específicas para mujeres
         return datos
 
     def generarRecomendaciones(self, datos_usuario):
-        with self.driver.session() as session:
-            resultado = session.write_transaction(self._crear_y_obtener_recomendaciones, datos_usuario)
+        with self._conexion.session() as sesion:
+            # Aquí iría la lógica para consultar la base de datos y obtener las recomendaciones
+            recomendaciones = "Recomendaciones basadas en tus respuestas y preferencias."
             print("Tus recomendaciones personalizadas son: ")
-            for record in resultado:
-                print(record["recomendacion"])
+            print(recomendaciones)
 
-    @staticmethod
-    def _crear_y_obtener_recomendaciones(tx, datos_usuario):
-        query = (
-            "CREATE (u:Usuario {edad: $edad, peso: $peso, nivel_actividad: $nivel_actividad}) "
-            "RETURN u"
-        )
-        resultado = tx.run(query, datos_usuario)
-        return resultado.single()
+    def close(self):
+        self._conexion.close()
 
 if __name__ == "__main__":
-    uri = "neo4j://localhost:8080/v1/users"  # URL local que usaremos 
-    user = "Users"                  # Usuarios
-    password = "ProyectoA23501"           # Contraseña
+    uri = "bolt://localhost:7687"  # URI de la base de datos Neo4j
+    user = "neo4j"                  # Usuario de la base de datos Neo4j
+    password = "No me recuerdo de la contraseña jsjsjs"      # Contraseña de la base de datos Neo4j
 
     sistema = HealthRecommendationSystem(uri, user, password)
     sexo = sistema.solicitarSexoUsuario()
     datos_usuario = sistema.realizarEncuesta(sexo)
     sistema.generarRecomendaciones(datos_usuario)
     sistema.close()
+
