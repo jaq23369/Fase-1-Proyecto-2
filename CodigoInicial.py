@@ -1,4 +1,4 @@
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase # type: ignore
 
 class HealthRecommendationSystem:
     def __init__(self, uri, user, password):
@@ -25,7 +25,7 @@ class HealthRecommendationSystem:
             resultado = session.write_transaction(self._crear_y_obtener_recomendaciones, datos_usuario)
             print("Tus recomendaciones personalizadas son: ")
             for record in resultado:
-                print(record['recomendacion'])
+                print(record["recomendacion"])
 
     @staticmethod
     def _crear_y_obtener_recomendaciones(tx, datos_usuario):
@@ -37,9 +37,9 @@ class HealthRecommendationSystem:
         return resultado.single()
 
 if __name__ == "__main__":
-    uri = "neo4j://localhost:7687"  # Asegúrate de cambiar esto por tu URI real
-    user = "neo4j"                  # Cambia por tu usuario
-    password = "password"           # Cambia por tu contraseña
+    uri = "neo4j://localhost:8080/v1/users"  # URL local que usaremos 
+    user = "Users"                  # Usuarios
+    password = "ProyectoA23501"           # Contraseña
 
     sistema = HealthRecommendationSystem(uri, user, password)
     sexo = sistema.solicitarSexoUsuario()
