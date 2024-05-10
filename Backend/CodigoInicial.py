@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request # type: ignore
 from neo4j import GraphDatabase # type: ignore
 
 app = Flask(__name__)
@@ -6,6 +6,7 @@ app = Flask(__name__)
 class HealthRecommendationSystem:
     def __init__(self, uri, user, password):
         self._conexion = GraphDatabase.driver(uri, auth=(user, password))
+        
 
     def solicitarSexoUsuario(self):
         return request.args.get('sexo')
@@ -49,8 +50,8 @@ class HealthRecommendationSystem:
 @app.route('/recomendaciones', methods=['GET'])
 def obtener_recomendaciones():
     uri = "bolt://localhost:7687"  # URI de la base de datos Neo4j
-    user = "neo4j"                  # Usuario de la base de datos Neo4j
-    password = "No me recuerdo de la contraseña jsjsjs"      # Contraseña de la base de datos Neo4j
+    user = "BaseDatosRecomendaciones"   # Usuario de la base de datos Neo4j
+    password = "Proyecto23501"      # Contraseña de la base de datos Neo4j
 
     sistema = HealthRecommendationSystem(uri, user, password)
     sexo = sistema.solicitarSexoUsuario()
