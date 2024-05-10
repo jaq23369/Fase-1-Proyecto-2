@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina entrenamiento de Fuerza </title>
+    <style>
+        /* Aquí va el bloque de estilos CSS que has proporcionado */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(Ejercicios.webp);
+        }
+
+        .EntrenamientoFuerza {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+         /* Estilos para el botón de regresar */
+         .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999; /* Para asegurar que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body>
+    <div class="EntrenamientoFuerza">
+        <header>
+            <h1>Rutina entrenamiento Fuerza</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Día 1 y Día 4: Entrenamiento de la parte superior del cuerpo</h2>
+                <ol>
+                    <li>Press de banca: 3 series de 8-12 repeticiones</li>
+                    <li>Dominadas o flexiones (o sus variantes modificadas según tu nivel): 3 series de 8-12 repeticiones</li>
+                    <li>Remo con barra o remo con mancuernas: 3 series de 8-12 repeticiones</li>
+                    <li>Press militar con barra o press de hombros con mancuernas: 3 series de 8-12 repeticiones</li>
+                    <li>Elevaciones laterales con mancuernas: 3 series de 10-15 repeticiones</li>
+                    <li>Curl de bíceps con barra o curl de bíceps con mancuernas: 3 series de 8-12 repeticiones</li>
+                    <li>Extensión de tríceps con polea alta o fondos en paralelas: 3 series de 8-12 repeticiones</li>
+                  </ol>
+            </section>
+
+            <section>
+                <h2>Día 3: Descanso activo o cardio ligero</h2>
+                <p>
+                    El descanso activo es hacer una actividad que no requiera hacer esfuerzo física, como una caminata, jugar Golf. 
+                </p>
+            </section>
+
+            <section>
+                <h2>Día 2 y Día 5: Entrenamiento de la parte inferior del cuerpo</h2>
+                <ol>
+                    <li>Sentadillas con barra: 4 series de 8-12 repeticiones</li>
+                    <li>Prensa de piernas o zancadas con mancuernas: 3 series de 10-12 repeticiones por pierna</li>
+                    <li>Peso muerto rumano con barra o peso muerto con mancuernas: 3 series de 8-12 repeticiones</li>
+                    <li>Extensiones de piernas en máquina: 3 series de 10-15 repeticiones</li>
+                    <li>Curl de piernas tumbado: 3 series de 10-15 repeticiones</li>
+                    <li>Elevación de talones de pie: 3 series de 12-15 repeticiones</li>
+                    
+                  </ol>
+            </section>
+
+            <section>
+                <h2>Día 6 y 7: Descanso o actividad de recuperación ligera</h2>
+            </section>
+        </main>
+
+        <footer>
+            <li>Recuerda realizar un calentamiento adecuado antes de cada sesión de entrenamiento, así como estiramientos al finalizar.</li>
+            <li>Además, asegúrate de mantener una buena técnica en todos los ejercicios y de descansar lo suficiente entre series y ejercicios.</li>
+            
+        </footer>
+    </div>
+    
+    <!-- Botón de regresar -->
+    <button class="back-button" onclick="goBack()">Regresar</button>
+
+    <!-- Contenido de la página -->
+    <div style="height: 2000px;">
+        <!-- Agrega contenido aquí -->
+    </div>
+
+    <!-- Script para la función de regresar -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutinas de Ejercicios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('Ejercicios.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        .planesdedieta {
+            width: 300px;
+            padding: 20px;
+            background-color: #d8f0b8;
+            border-radius: 200px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .planesdedieta h2 {
+            margin-bottom: 20px;
+        }
+
+        .planesdedieta-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 200px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .planesdedieta-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el botón de regresar */
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 200px;
+            cursor: pointer;
+            z-index: 9999; /* Para asegurar que esté por encima de otros elementos */
+        }
+
+        .RutinaEjercicios h2 {
+            width: 95%;
+            padding: 15px;
+            background-color: #55ba8e;
+            color: #fff;
+            border: none;
+            border-radius: 200px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="RutinaEjercicios">
+        <h2>Rutinas disponibles</h2>
+        
+        
+        <!-- Botón para Rutina de entrenamiento de fuerzaa  -->
+        <button class="planesdedieta-button" onclick="EntrenamientoFuerza()">Rutina de entrenamiento de fuerza</button>
+        <!-- Botón para Rutina de Carrera y Bicileta -->
+        <button class="planesdedieta-button" onclick="CarrerayBicicleta()">Rutina de Cardio </button>       
+        <!-- Botón para Rutina de Yogas  -->
+        <button class="planesdedieta-button" onclick="Yoga()">Rutina de Yoga </button>
+           
+
+    </div>
+
+    <script>
+        function EntrenamientoFuerza() {
+            window.location.href = "EntrenamientoFuerza.html"; 
+        }
+
+        function CarrerayBicicleta() {
+            window.location.href = "CarrerayBicicleta.html"; 
+        }
+        
+        function Yoga() {
+            window.location.href = "Yoga.html"; 
+        }
+    </script>
+
+    <!-- Botón de regresar -->
+    <button class="back-button" onclick="goBack()">Regresar</button>
+
+    <!-- Contenido de la página -->
+    <div style="height: 2000px;">
+        <!-- Agrega contenido aquí -->
+    </div>
+
+    <!-- Script para la función de regresar -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

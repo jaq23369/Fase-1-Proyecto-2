@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina entrenamiento de Fuerza </title>
+    <style>
+        /* Aquí va el bloque de estilos CSS que has proporcionado */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(Ejercicios.webp);
+        }
+
+        .cardio {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+         /* Estilos para el botón de regresar */
+         .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999; /* Para asegurar que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body>
+    <div class="cardio">
+        <header>
+            <h1>Rutina de Cardio</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Lunes: Carrera de resistencia</h2>
+                <ol>
+                    <li>Carrera continua a un ritmo moderado durante 30-45 minutos. Mantén un ritmo que te permita conversar mientras corres.</li>
+                    <li>Estiramientos suaves después de correr para relajar los músculos.</li>
+                  </ol>
+            </section>
+
+            <section>
+                <h2>Martes: Entrenamiento de bicicleta de intervalos</h2>
+                <ol>
+                    <li>Calentamiento: 10 minutos de pedaleo suave.</li>
+                    <li>Intervalos de alta intensidad: Realiza 5-6 intervalos de 2 minutos pedaleando a una intensidad alta
+                        (alrededor del 80-90% de tu esfuerzo máximo) seguidos de 2 minutos de pedaleo suave para la recuperación.</li>
+                    <li>Enfriamiento: 5-10 minutos de pedaleo suave.</li>
+                    <li>Estiramientos de las piernas después del entrenamiento</li>
+           
+                    
+                  </ol>
+            </section>
+
+            <section>
+                <h2>Miércoles y Domingo: Descanso o actividad de baja intensidad</h2>
+                <ol>
+                    <li>Caminata, yoga, estiramientos, etc.</li>
+                  </ol>
+            </section>
+
+            <section>
+                <h2>Jueves: Carrera de velocidad y resistencia</h2>
+                <li>Calentamiento: 10-15 minutos de trote suave.</li>
+                <li>Entrenamiento de intervalos: Alterna entre períodos de alta velocidad 
+                        (30-60 segundos) seguidos de 
+                        períodos de recuperación activa (trote suave o caminata) 
+                        durante 20-30 minutos.</li>
+                <li>Enfriamiento: 5-10 minutos de pedaleo suave.</li>
+            </section>
+
+            <section>
+                <h2>Viernes: Entrenamiento de bicicleta de resistencia</h2>
+                <li>Pedaleo continuo a un ritmo moderado durante 45-60 minutos. Mantén una cadencia constante y una intensidad que te desafíe pero que puedas mantener durante todo el tiempo.</li>
+                <li>Estiramientos de las piernas después del entrenamiento.</li>
+                
+            </section>
+
+            <section>
+                <h2>Sábado: Carrera de larga distancia</h2>
+                <li>Carrera continua a un ritmo moderado durante 60-90 minutos. 
+                    Este es un entrenamiento para aumentar la resistencia y la capacidad cardiovascular.</li>
+                <li>Estiramientos suaves después de correr para relajar los músculos.</li>
+            </section>
+            
+        </main>
+
+        <footer>
+            <li>Recuerda realizar un calentamiento adecuado antes de cada sesión de entrenamiento, así como estiramientos al finalizar.</li>
+            <li>Además, asegúrate de mantener una buena técnica en todos los ejercicios y de descansar lo suficiente entre series y ejercicios.</li>
+            
+        </footer>
+    </div>
+    
+    <!-- Botón de regresar -->
+    <button class="back-button" onclick="goBack()">Regresar</button>
+
+    <!-- Contenido de la página -->
+    <div style="height: 2000px;">
+        <!-- Agrega contenido aquí -->
+    </div>
+
+    <!-- Script para la función de regresar -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+</body>
+</html>
