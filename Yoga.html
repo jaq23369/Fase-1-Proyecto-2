@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina de Yoga</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .yoga {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+         /* Estilos para el botón de regresar */
+         .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999; /* Para asegurar que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body>
+    <div class="yoga">
+        <header>
+            <h1>Ejercicios de Yoga</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Respiración consciente (Pranayama)</h2>
+                <li>Comienza en una posición cómoda sentado o acostado.</li>
+                <li>Cierra los ojos y concéntrate en tu respiración.</li>     
+                <li>Respira profundamente por la nariz, llenando tu abdomen, luego tu pecho. Exhala lentamente por la boca.</li>
+                <li>Repite durante 3-5 minutos para calmar la mente y conectar con tu cuerpo.</li>     
+
+
+            </section>
+
+            <section>
+                <h2>Saludo al sol (Surya Namaskar)</h2>
+                <li>Realiza 3-5 rondas del Saludo al Sol para calentar tu cuerpo y aumentar la circulación sanguínea.</li>
+                <li>Puedes encontrar instrucciones detalladas para el Saludo al Sol en línea o seguir este enlace:</li>
+                <a href="https://www.youtube.com/watch?v=Pw8PYdZUlnI">Saludo al Sol-Surya Namaskar</a>
+            </section>
+
+            <section>
+                <h2> Posturas de flexión hacia delante y flexión de columna</h2>
+                <li>Flexión hacia delante de pie (Uttanasana): 5 respiraciones profundas.</li>
+                <li>Postura del niño (Balasana): 5-10 respiraciones.</li>     
+                <li>Cobra (Bhujangasana): 3-5 respiraciones.</li>
+                <li>Perro mirando hacia abajo (Adho Mukha Svanasana): 5-10 respiraciones.</li>  
+                
+
+
+            </section>
+
+            <section>
+                <h2> Posturas de pie</h2>
+                <li>Postura de la montaña (Tadasana): 5 respiraciones profundas.</li>
+                <li>Postura del árbol (Vrksasana): 3-5 respiraciones por pierna.</li>     
+                <li>Postura del triángulo (Trikonasana): 3-5 respiraciones por lado.</li>
+                <li>Guerrero I (Virabhadrasana I): 3-5 respiraciones por lado.</li>  
+                <li>Guerrero II (Virabhadrasana II): 3-5 respiraciones por lado.</li>   
+
+
+            </section>
+
+            <section>
+                <h2> Posturas de equilibrio</h2>
+                <li>Postura del perro boca abajo (Adho Mukha Vrksasana): si te sientes cómodo con la inversión.</li>
+                <li>Postura del árbol (Vrksasana): 3-5 respiraciones por pierna.</li>     
+            
+            </section>
+            
+        </main>
+
+        <footer>
+            <p>Estas recetas son ejemplos de comidas bajas en calorias y altas en fibra</p>
+            <p>Puedes tomarlas como sugerencia </p>
+        </footer>
+    </div>
+    
+    <!-- Botón de regresar -->
+    <button class="back-button" onclick="goBack()">Regresar</button>
+
+    <!-- Contenido de la página -->
+    <div style="height: 2000px;">
+        <!-- Agrega contenido aquí -->
+    </div>
+
+    <!-- Script para la función de regresar -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+</body>
+</html>

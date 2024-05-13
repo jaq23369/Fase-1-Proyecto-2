@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento de Fuerza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+         /* Estilos para el botón de regresar */
+         .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999; /* Para asegurar que esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dietas altas en proteína</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Pechuga de pollo a la plancha con vegetales al vapor</h2>
+                <p>
+                    La pechuga de pollo es una excelente fuente de proteína magra. Combínala con una variedad de vegetales al vapor como brócoli, 
+                    zanahorias y coliflor para obtener una comida baja en calorías pero alta en proteínas y nutrientes.
+                </p>
+            </section>
+
+            <section>
+                <h2>Salmón al horno con quinoa y espárragos</h2>
+                <p>
+                    El salmón es rico en ácidos grasos omega-3 y proteínas. Acompáñalo con quinoa, que es una excelente fuente de proteínas vegetales,
+                    y espárragos para obtener una comida equilibrada y nutritiva.
+                </p>
+            </section>
+
+            <section>
+                <h2>Ensalada de atún y garbanzos</h2>
+                <p>
+                    Combina atún enlatado con garbanzos, espinacas frescas, tomates cherry, pepino y aceitunas para obtener una ensalada rica en proteínas y fibra. 
+                    Puedes aliñarla con aceite de oliva y limón para añadir sabor sin muchas calorías.
+                </p>
+            </section>
+
+            <section>
+                <h2>Huevos revueltos con espinacas y aguacate</h2>
+                <p>
+                    Los huevos son una excelente fuente de proteínas y nutrientes. Revuélvelos con espinacas frescas y
+                     acompaña con unas rodajas de aguacate para obtener una comida satisfactoria y alta en proteínas.
+                </p>
+            </section><section>
+                <h2>Tofu salteado con verduras</h2>
+                <p>
+                    El tofu es una gran opción para las dietas vegetarianas o veganas, ya que es rico en proteínas vegetales.
+                     Saltea el tofu con tus verduras favoritas, como pimientos, cebollas y champiñones, y aliña con salsa de soja para un toque de sabor.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Estas recetas son ejemplos de comidas altas en proteínas</p>
+            <p>Puedes tomarlas como sugerencia </p>
+        </footer>
+    </div>
+    
+    <!-- Botón de regresar -->
+    <button class="back-button" onclick="goBack()">Regresar</button>
+
+    <!-- Contenido de la página -->
+    <div style="height: 2000px;">
+        <!-- Agrega contenido aquí -->
+    </div>
+
+    <!-- Script para la función de regresar -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+</body>
+</html>
