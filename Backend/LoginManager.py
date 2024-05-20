@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request  # Importar módulos de Flask
-from neo4j import GraphDatabase  # Importar driver de Neo4j
+from flask import Flask, jsonify, request  # type: ignore # Importar módulos de Flask
+from neo4j import GraphDatabase  # type: ignore # Importar driver de Neo4j
 
 # Inicializar aplicación Flask
 app = Flask(__name__)
@@ -37,6 +37,25 @@ class HealthRecommendationSystem:
     def close(self):
         # Cerrar conexión con Neo4j
         self._conexion.close()
+    
+    def crearUsuario(self, nombre, datos):
+    # Crear un nuevo usuario
+        with self._conexion.session() as sesion:
+            sesion.run("CREATE (u:Usuario $datos)", datos=datos)
+
+@app.route('/register', methods=['POST'])
+def register():
+    usuario_data = request.json
+    nombre = usuario_data.get('username')
+    
+    uri = "neo4j+s://b23ec4d0.databases.neo4j.io"
+    user = "neo4j"
+    password = "Z8ZBUBT-jKZe8k21Ys2ljyAgNVoMjJrUCaQVCckRxXY"
+    sistema = HealthRecommendationSystem(uri, user, password)
+    sistema.crearUsuario(nombre, usuario_data)
+    sistema.close()
+
+    return jsonify({'message': 'Usuario registrado exitosamente'})
 
 # Endpoint para manejar inicios de sesión (POST)
 @app.route('/login', methods=['POST'])

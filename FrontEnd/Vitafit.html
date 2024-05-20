@@ -83,26 +83,42 @@
         </form>
     </div>
 
+    <div class="register-container">
+        <h2>Registrar Usuario</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="registerUsername" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="registerPassword" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Registrar</button>
+            </div>
+        </form>
+    </div>
+
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
+        document.getElementById('neo4j+s://b23ec4d0.databases.neo4j.io').addEventListener('submit', function(event) {
             event.preventDefault();
-            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
-            fetch('neo4j+s://b23ec4d0.databases.neo4j.io', { // Cambia la URL según sea necesario
+
+            fetch('neo4j+s://b23ec4d0.databases.neo4j.io', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username: username, password: password })
+                body: JSON.stringify({ username: username })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Inicio de sesión guardado exitosamente') {
-                    window.location.href = 'RegistroDeDatos.html'; // Redirigir a la página de registro de datos
+                    window.location.href = 'RegistroDeDatos.html';
                 } else {
-                    alert('Usuario o contraseña incorrectos');
+                    alert('Error al iniciar sesión');
                 }
             })
             .catch(error => {
@@ -110,8 +126,36 @@
                 alert(error);
             });
         });
+
+        function registrarUsuario(event) {
+            event.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const userData = { username, password };
+
+            fetch('neo4j+s://b23ec4d0.databases.neo4j.io', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Usuario registrado exitosamente') {
+                    alert('Registro exitoso. Ahora puedes iniciar sesión.');
+                } else {
+                    alert('Error al registrar usuario');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error);
+            });
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', registrarUsuario);
     </script>
-    
 </body>
 </html>
 
