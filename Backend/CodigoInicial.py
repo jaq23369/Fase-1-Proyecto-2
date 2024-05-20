@@ -49,9 +49,9 @@ class HealthRecommendationSystem:
 
 @app.route('/recomendaciones', methods=['GET'])
 def obtener_recomendaciones():
-    uri = "bolt://localhost:7687"  # URI de la base de datos Neo4j
-    user = "BaseDatosRecomendaciones"   # Usuario de la base de datos Neo4j
-    password = "Proyecto23501"      # Contraseña de la base de datos Neo4j
+    uri = "http://41b0db32.databases.neo4j.io:7687/"  # URI de la base de datos Neo4j
+    user = "BDMPROYECTO"   # Usuario de la base de datos Neo4j
+    password = "VJzH83KfCLWHhkDRV4pi_rqrnyJ3Sy75YR6UTPLUu28"      # Contraseña de la base de datos Neo4j
 
     sistema = HealthRecommendationSystem(uri, user, password)
     sexo = sistema.solicitarSexoUsuario()
