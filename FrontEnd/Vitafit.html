@@ -68,7 +68,7 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form action="RegitstroDeDatos.html">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="username">Usuario:</label>
                 <input type="text" id="username" name="username" required>
@@ -82,6 +82,35 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            fetch('neo4j+s://b23ec4d0.databases.neo4j.io', { // Cambia la URL según sea necesario
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Inicio de sesión guardado exitosamente') {
+                    window.location.href = 'RegistroDeDatos.html'; // Redirigir a la página de registro de datos
+                } else {
+                    alert('Usuario o contraseña incorrectos');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al intentar iniciar sesión');
+            });
+        });
+    </script>
     
 </body>
 </html>
