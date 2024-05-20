@@ -30,7 +30,7 @@ def login():
     nombre_usuario = request.json.get('username')
     
     # Guardar el inicio de sesión en la base de datos Neo4j
-    uri = "bolt://localhost:7687"  # URI de la base de datos Neo4j
+    uri = "41b0db32.databases.neo4j.io:7687"  # URI de la base de datos Neo4j
     user = "DBMSRecomendaciones"                  # Usuario de la base de datos Neo4j
     password = "Proyecto23501"      # Contraseña de la base de datos Neo4j
     sistema = HealthRecommendationSystem(uri, user, password)
