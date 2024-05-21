@@ -3,6 +3,8 @@ from neo4j import GraphDatabase  # Importar driver de Neo4j
 from neo4j.exceptions import ServiceUnavailable, AuthError, ConfigurationError  # Importar excepciones de Neo4j
 
 
+
+
 # Inicializar aplicación Flask
 app = Flask(__name__)
 
@@ -56,7 +58,7 @@ class HealthRecommendationSystem:
             print(f"Error al eliminar usuario: {e}")
             raise
 
-    def crearUsuario(self,nombre , datos):
+    def crearUsuario(self, datos):
         try:
             # Crear un nuevo usuario
             with self._conexion.session() as sesion:
@@ -87,23 +89,35 @@ def register():
 
     return jsonify({'message': 'Usuario registrado exitosamente'})
 
-# Endpoint para manejar inicios de sesión (POST)
+
+
+
+
 @app.route('/login', methods=['POST'])
 def login():
-    nombre_usuario = request.json.get('username')
+    nombre_usuario = request.form.get('username')  # Obtener el nombre de usuario del formulario
+    password = request.form.get('password')  # Obtener la contraseña del formulario
 
-    # Guardar el inicio de sesión en la base de datos Neo4j
     uri = "neo4j+s://b23ec4d0.databases.neo4j.io"  # URI de la base de datos Neo4j
     user = "neo4j"  # Usuario de la base de datos Neo4j
-    password = "Z8ZBUBT-jKZe8k21Ys2ljyAgNVoMjJrUCaQVCckRxXY"  # Contraseña de la base de datos Neo4j
-    sistema = HealthRecommendationSystem(uri, user, password)
-    sistema.guardarInicioSesion(nombre_usuario)
-    sistema.close()
+    password_db = "Z8ZBUBT-jKZe8k21Ys2ljyAgNVoMjJrUCaQVCckRxXY"  # Contraseña de la base de datos Neo4j
 
-    return jsonify({'message': 'Inicio de sesión guardado exitosamente'})
+    sistema = HealthRecommendationSystem(uri, user, password_db)
+    usuario = sistema.obtenerUsuario(nombre_usuario)  # Buscar al usuario en la base de datos
+
+    if usuario and usuario.get("password") == password:  # Verificar si el usuario y la contraseña coinciden
+        sistema.guardarInicioSesion(nombre_usuario)  # Guardar inicio de sesión en la base de datos
+        sistema.close()
+        return jsonify({'message': 'Inicio de sesión guardado exitosamente'})
+    else:
+        sistema.close()
+        return jsonify({'message': 'Nombre de usuario o contraseña incorrectos'}), 401
+
+
+
 
 # Endpoint para obtener detalles de un usuario (GET)
-@app.route('/usuario/<nombre>', methods=['GET'])
+@app.route('/login', methods=['GET'])
 def obtener_usuario(nombre):
     uri = "neo4j+s://b23ec4d0.databases.neo4j.io"
     user = "neo4j"
