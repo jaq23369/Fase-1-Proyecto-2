@@ -95,7 +95,7 @@
 <body>
     <div class="register-container">
         <h2>Registrar Usuario</h2>
-        <form action="/FrontEnd/Routes/auth.js/register">
+        <form id="registerForm">
             <div class="form-group">
                 <label for="registerUsername">Usuario:</label>
                 <input type="text" id="registerUsername" name="username" required>
@@ -112,6 +112,30 @@
             <a href="Vitafit.html">¿Ya tienes una cuenta? Iniciar Sesión</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                window.location.href = 'formulario.html';
+            } else {
+                // Manejar errores
+                alert('Error en el registro');
+            }
+        });
+    </script>
 </body>
 </html>
 
