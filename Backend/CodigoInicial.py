@@ -1,78 +1,58 @@
-from flask import Flask, jsonify, request # type: ignore
-from neo4j import GraphDatabase # type: ignore
+from flask import Flask, jsonify, request
+from neo4j import GraphDatabase
+from neo4j.exceptions import ServiceUnavailable, AuthError, ConfigurationError
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Habilitar CORS en tu aplicación Flask
 
 class HealthRecommendationSystem:
     def __init__(self, uri, user, password):
-        self._conexion = GraphDatabase.driver(uri, auth=(user, password))
-        # Inicializa la conexión con la base de datos Neo4j con la URI, usuario y contraseña proporcionados.
-
-    def solicitarSexoUsuario(self):
-        return request.args.get('sexo')
-        # Solicita el parámetro 'sexo' del usuario a través de la URL.
-
-    def realizarEncuesta(self, sexo):
-        datos_generales = self.preguntasGenerales()
-        if (sexo == 'Hombre'):
-            datos_especificos = self.preguntasEspecificasHombres()
-        elif (sexo == 'Mujer'):
-            datos_especificos = self.preguntasEspecificasMujeres()
-        return {**datos_generales, **datos_especificos}
-        # Realiza una encuesta según el sexo del usuario y retorna un diccionario con los datos generales y específicos.
-
-    def preguntasGenerales(self):
-        datos = {}
-        datos['edad'] = request.args.get('edad')
-        datos['peso'] = request.args.get('peso')
-        # Continuar con otras preguntas generales
-        return datos
-        # Solicita y retorna los datos generales del usuario.
-
-    def preguntasEspecificasHombres(self):
-        datos = {}
-        datos['nivel_actividad'] = request.args.get('nivel_actividad')
-        # Continuar con otras preguntas específicas para hombres
-        return datos
-        # Solicita y retorna los datos específicos para hombres.
-
-    def preguntasEspecificasMujeres(self):
-        datos = {}
-        datos['nivel_actividad'] = request.args.get('nivel_actividad')
-        # Continuar con otras preguntas específicas para mujeres
-        return datos
-        # Solicita y retorna los datos específicos para mujeres.
-
-    def generarRecomendaciones(self, datos_usuario):
-        with self._conexion.session() as sesion:
-            # Aquí iría la lógica para consultar la base de datos y obtener las recomendaciones
-            recomendaciones = "Recomendaciones basadas en tus respuestas y preferencias."
-            return recomendaciones
-        # Genera recomendaciones basadas en los datos del usuario mediante una consulta a la base de datos.
+        try:
+            self._conexion = GraphDatabase.driver(uri, auth=(user, password))
+        except (ServiceUnavailable, AuthError, ConfigurationError) as e:
+            print(f"Error al conectar con la base de datos: {e}")
+            raise
 
     def close(self):
         self._conexion.close()
-        # Cierra la conexión con la base de datos.
 
-@app.route('/recomendaciones', methods=['GET'])
-def obtener_recomendaciones():
-    uri = "neo4j+s://b23ec4d0.databases.neo4j.io"  # URI de la base de datos Neo4j
-    user = "neo4j"   # Usuario de la base de datos Neo4j
-    password = "Z8ZBUBT-jKZe8k21Ys2ljyAgNVoMjJrUCaQVCckRxXY"  # Contraseña de la base de datos Neo4j
+    def guardarUsuario(self, usuario, password):
+        try:
+            with self._conexion.session() as sesion:
+                sesion.run("CREATE (u:Usuario {nombre: $nombre, password: $password})",
+                           nombre=usuario, password=password)
+        except Exception as e:
+            print(f"Error al guardar usuario: {e}")
+            raise
 
-    sistema = HealthRecommendationSystem(uri, user, password)
-    # Crea una instancia del sistema de recomendaciones de salud con los datos de conexión a la base de datos.
-    sexo = sistema.solicitarSexoUsuario()
-    # Solicita el sexo del usuario.
-    datos_usuario = sistema.realizarEncuesta(sexo)
-    # Realiza la encuesta basada en el sexo del usuario y obtiene los datos del usuario.
-    recomendaciones = sistema.generarRecomendaciones(datos_usuario)
-    # Genera recomendaciones basadas en los datos del usuario.
+    def obtenerUsuario(self, nombre):
+        try:
+            with self._conexion.session() as sesion:
+                resultado = sesion.run("MATCH (u:Usuario {nombre: $nombre}) RETURN u", nombre=nombre)
+                usuario = resultado.single()
+                return usuario["u"] if usuario else None
+        except Exception as e:
+            print(f"Error al obtener usuario: {e}")
+            raise
+
+@app.route('/register', methods=['POST'])
+def register():
+    print("Solicitud de registro recibida")
+    datos = request.json
+    print(f"Datos recibidos: {datos}")
+    nombre_usuario = datos.get('username')
+    password = datos.get('password')
+
+    uri = "neo4j+s://beb2a93f.databases.neo4j.io"
+    user = "neo4j"
+    password_db = "mcB_Lw8n3MWqQmrXxYtk-D3toXxXthYE8hnME-yOdQk"
+
+    sistema = HealthRecommendationSystem(uri, user, password_db)
+    sistema.guardarUsuario(nombre_usuario, password)
     sistema.close()
-    # Cierra la conexión con la base de datos.
-    return jsonify({'recomendaciones': recomendaciones})
-    # Retorna las recomendaciones en formato JSON.
+    return jsonify({'message': 'Usuario registrado exitosamente'}), 201
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    # Ejecuta la aplicación Flask en modo de depuración.
+    app.run(port=5000)
+

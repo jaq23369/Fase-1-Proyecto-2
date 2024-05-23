@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +120,7 @@
             const username = document.getElementById('registerUsername').value;
             const password = document.getElementById('registerPassword').value;
 
-            const response = await fetch('/register', {
+            const response = await fetch('http://127.0.0.1:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -138,3 +137,5 @@
     </script>
 </body>
 </html>
+
+

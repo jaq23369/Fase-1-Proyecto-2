@@ -8,6 +8,7 @@ class HealthRecommendationSystem:
     def __init__(self, uri, user, password):
         try:
             self._conexion = GraphDatabase.driver(uri, auth=(user, password))
+            print("Conexion exitosa ???")
             # Intenta establecer la conexión con la base de datos Neo4j.
         except (ServiceUnavailable, AuthError, ConfigurationError) as e:
             print(f"Error al conectar con la base de datos: {e}")
@@ -88,6 +89,8 @@ def test_connection():
 
 @app.route('/register', methods=['POST'])
 def register():
+    print("Registrando ...")
+    
     usuario_data = request.json
     uri = "neo4j+s://b23ec4d0.databases.neo4j.io"
     user = "neo4j"
@@ -121,5 +124,5 @@ def login():
         # Responde con un error si las credenciales son incorrectas.
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000)
     # Ejecuta la aplicación Flask en modo de depuración.
