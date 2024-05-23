@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitafit - Iniciar Sesión</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -32,7 +32,7 @@
             text-align: center;
         }
 
-        .login-container h2 {
+        .login-container {
             margin-bottom: 25px;
             font-weight: 600;
             color: #333;
@@ -77,40 +77,62 @@
             background-color: #0056b3;
         }
 
-        .register-link {
+        .login-link {
             margin-top: 20px;
         }
 
-        .register-link a {
+        .login-link a {
             color: #007bff;
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        .register-link a:hover {
+        .login-link a:hover {
             color: #0056b3;
         }
     </style>
 </head>
-<body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form action="/login">  
-            <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Iniciar Sesión</button>
-            </div>
-        </form>
-        <div class="register-link">
-            <a href="Register.html">¿No tienes una cuenta? Registrar</a>
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">  
+        <div class="form-group">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
         </div>
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Iniciar Sesión</button>
+        </div>
+    </form>
+    <div class="register-link">
+        <a href="Register.html">¿No tienes una cuenta? Registrar</a>
     </div>
+</div>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            window.location.href = 'recomendaciones.html';
+        } else {
+            alert('Nombre de usuario o contraseña incorrectos');
+        }
+    });
+</script>
 </body>
 </html>
