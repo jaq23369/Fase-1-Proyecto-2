@@ -4,6 +4,16 @@ from neo4j.exceptions import ServiceUnavailable, AuthError, ConfigurationError
 
 app = Flask(__name__)
 
+class HealthRecommendationSystem:
+    def __init__(self, uri, user, password):
+        try:
+            self._conexion = GraphDatabase.driver(uri, auth=(user, password))
+            # Intenta establecer la conexión con la base de datos Neo4j.
+        except (ServiceUnavailable, AuthError, ConfigurationError) as e:
+            print(f"Error al conectar con la base de datos: {e}")
+            raise
+            # Maneja errores de conexión y autenticación.
+
     def guardarInicioSesion(self, usuario):
         try:
             with self._conexion.session() as sesion:
@@ -19,6 +29,7 @@ app = Flask(__name__)
         try:
             with self._conexion.session() as sesion:
                 resultado = sesion.run("MATCH (u:Usuario {nombre: $nombre}) RETURN u", nombre=nombre)
+                usuario = resultado.single()
                 return usuario["u"] if usuario else None
                 # Obtiene los datos del usuario desde la base de datos.
         except Exception as e:
@@ -102,7 +113,7 @@ def login():
     if usuario and usuario.get("password") == password:
         sistema.guardarInicioSesion(nombre_usuario)
         sistema.close()
-        return jsonify({'message': 'Inicio de sesión exitoso', 'redirect': 'recomendaciones.html'}
+        return jsonify({'message': 'Inicio de sesión exitoso', 'redirect': 'recomendaciones.html'})
         # Verifica el inicio de sesión del usuario y guarda el registro del inicio de sesión.
     else:
         sistema.close()
@@ -112,4 +123,3 @@ def login():
 if __name__ == "__main__":
     app.run(debug=True)
     # Ejecuta la aplicación Flask en modo de depuración.
-
