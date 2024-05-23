@@ -4,20 +4,13 @@ from neo4j.exceptions import ServiceUnavailable, AuthError, ConfigurationError
 
 app = Flask(__name__)
 
-class HealthRecommendationSystem:
-    def __init__(self, uri, user, password):
-        try:
-            self._conexion = GraphDatabase.driver(uri, auth=(user, password))
-        except (ServiceUnavailable, AuthError, ConfigurationError) as e:
-            print(f"Error al conectar con la base de datos: {e}")
-            raise
-
     def guardarInicioSesion(self, usuario):
         try:
             with self._conexion.session() as sesion:
                 sesion.run("MERGE (u:Usuario {nombre: $nombre}) "
                            "MERGE (l:InicioSesion {fecha: timestamp()}) "
                            "MERGE (u)-[:INICIO_SESION]->(l)", nombre=usuario)
+                # Guarda el inicio de sesión del usuario en la base de datos.
         except Exception as e:
             print(f"Error al guardar inicio de sesión: {e}")
             raise
@@ -26,8 +19,8 @@ class HealthRecommendationSystem:
         try:
             with self._conexion.session() as sesion:
                 resultado = sesion.run("MATCH (u:Usuario {nombre: $nombre}) RETURN u", nombre=nombre)
-                usuario = resultado.single()
                 return usuario["u"] if usuario else None
+                # Obtiene los datos del usuario desde la base de datos.
         except Exception as e:
             print(f"Error al obtener usuario: {e}")
             raise
@@ -36,6 +29,7 @@ class HealthRecommendationSystem:
         try:
             with self._conexion.session() as sesion:
                 sesion.run("MATCH (u:Usuario {nombre: $nombre}) SET u += $nuevos_datos", nombre=nombre, nuevos_datos=nuevos_datos)
+                # Actualiza los datos del usuario en la base de datos.
         except Exception as e:
             print(f"Error al actualizar usuario: {e}")
             raise
@@ -44,6 +38,7 @@ class HealthRecommendationSystem:
         try:
             with self._conexion.session() as sesion:
                 sesion.run("MATCH (u:Usuario {nombre: $nombre}) DETACH DELETE u", nombre=nombre)
+                # Elimina el usuario de la base de datos.
         except Exception as e:
             print(f"Error al eliminar usuario: {e}")
             raise
@@ -52,6 +47,7 @@ class HealthRecommendationSystem:
         try:
             with self._conexion.session() as sesion:
                 sesion.run("CREATE (u:Usuario $datos)", datos=datos)
+                # Crea un nuevo usuario en la base de datos.
         except Exception as e:
             print(f"Error al crear usuario: {e}")
             raise
@@ -59,6 +55,7 @@ class HealthRecommendationSystem:
     def close(self):
         try:
             self._conexion.close()
+            # Cierra la conexión con la base de datos.
         except Exception as e:
             print(f"Error al cerrar la conexión: {e}")
             raise
@@ -73,11 +70,9 @@ def test_connection():
         sistema = HealthRecommendationSystem(uri, user, password)
         sistema.close()
         return jsonify({'message': 'Conexión exitosa a Neo4j'}), 200
+        # Endpoint para probar la conexión con la base de datos.
     except Exception as e:
         return jsonify({'message': f'Error al conectar a Neo4j: {e}'}), 500
-
-if __name__ == "__main__":
-    app.run(port=5000)
 
 
 @app.route('/register', methods=['POST'])
@@ -90,6 +85,7 @@ def register():
     sistema.crearUsuario(usuario_data)
     sistema.close()
     return jsonify({'message': 'Usuario registrado exitosamente'}), 201
+    # Endpoint para registrar un nuevo usuario.
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -106,11 +102,14 @@ def login():
     if usuario and usuario.get("password") == password:
         sistema.guardarInicioSesion(nombre_usuario)
         sistema.close()
-        return jsonify({'message': 'Inicio de sesión exitoso', 'redirect': 'recomendaciones.html'})
+        return jsonify({'message': 'Inicio de sesión exitoso', 'redirect': 'recomendaciones.html'}
+        # Verifica el inicio de sesión del usuario y guarda el registro del inicio de sesión.
     else:
         sistema.close()
         return jsonify({'message': 'Nombre de usuario o contraseña incorrectos'}), 401
+        # Responde con un error si las credenciales son incorrectas.
 
 if __name__ == "__main__":
     app.run(debug=True)
+    # Ejecuta la aplicación Flask en modo de depuración.
 
