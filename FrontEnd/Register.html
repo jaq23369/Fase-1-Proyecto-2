@@ -129,7 +129,9 @@
             });
 
             if (response.ok) {
-                window.location.href = 'RegistroDeDatos.html';
+                const data = await response.json();
+                const userId = data.user.id;
+                window.location.href = `RegistroDeDatos.html?id=${userId}`;
             } else {
                 alert('Error en el registro');
             }

@@ -64,7 +64,8 @@
 
     </style>
 </head>
-<body>
+<body >
+    <p id="dietarutinatag"></p>
     <div class="recomendaciones">
         <h2>Recomendaciones</h2>
         <!-- Botón para Rutinas de Ejercicio -->
@@ -74,6 +75,12 @@
     </div>
 
     <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const rutina = params.get('rutina');
+            const dieta = params.get('dieta');
+            document.getElementById("dietarutinatag").innerHTML = `Te recomendamos una ${dieta} y una ${rutina}`;
+        }
         function irARutinas() {
             window.location.href = "RutinaEjercicios.html"; 
         }

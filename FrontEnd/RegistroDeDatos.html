@@ -18,7 +18,6 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
-
         }
 
         .form-container {
@@ -27,15 +26,16 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .form-container h2 {
             margin-bottom: 20px;
-            text-align: center;
         }
 
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
@@ -44,7 +44,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 3px;
             border: 1px solid #ccc;
@@ -68,8 +69,9 @@
 </head>
 <body>
     <div class="form-container">
+        <h1 id="header"></h1>
         <h2>Registro de Datos</h2>
-        <form action="Recomendaciones.html">
+        <form id="dataForm">
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required>
@@ -116,5 +118,91 @@
             </div>
         </form>
     </div>
+    <script>
+        function determinarRutinaYDieta(peso, altura, edad, genero, nivelActividad) {
+            let rutinaEjercicio = '';
+            let dieta = '';
+        
+            // Determinar rutina de ejercicio
+            if (nivelActividad === 'sedentario') {
+                rutinaEjercicio = 'rutina de yoga';
+            } else if (nivelActividad === 'ligero' || nivelActividad === 'moderado') {
+                rutinaEjercicio = 'rutina de cardio';
+            } else {
+                rutinaEjercicio = 'rutina de entrenamiento de fuerza';
+            }
+        
+            // Determinar dieta
+            const metabolismoBasal = calcularMetabolismoBasal(peso, altura, edad, genero);
+            if (metabolismoBasal <= 2000) {
+                dieta = 'Dieta baja en calorias y alta en fibra';
+            } else if (metabolismoBasal > 2000 && metabolismoBasal <= 2500) {
+                dieta = 'Dieta baja en sodio y grasas';
+            } else {
+                dieta = 'Dieta altas en proteina';
+            }
+        
+            return { rutinaEjercicio, dieta };
+        }
+        
+        function calcularMetabolismoBasal(peso, altura, edad, genero) {
+            let metabolismoBasal = 0;
+            if (genero === 'masculino') {
+                metabolismoBasal = 10 * peso + 6.25 * altura - 5 * edad + 5;
+            } else {
+                metabolismoBasal = 10 * peso + 6.25 * altura - 5 * edad - 161;
+            }
+            return metabolismoBasal;
+        }
+        
+
+        
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                document.getElementById('header').textContent = `ID: ${id}`;
+            }
+        
+            document.getElementById('dataForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                data.id = id;
+        
+                fetch('http://127.0.0.1:5000/updateuser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Datos actualizados correctamente');
+        
+                    // Calcular recomendación de rutina de ejercicio y dieta
+                    const { peso, altura, edad, genero, nivel_actividad } = data.user;
+                    const recomendacion = determinarRutinaYDieta(peso, altura, edad, genero, nivel_actividad);
+        
+                    // Redirigir a la página Recomendaciones.html con los parámetros de recomendación
+                    const queryParams = new URLSearchParams({
+                        rutina: recomendacion.rutinaEjercicio,
+                        dieta: recomendacion.dieta
+                    });
+                    window.location.href = `Recomendaciones.html?${queryParams.toString()}`;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Ocurrió un error al actualizar los datos');
+                });
+            });
+        };
+        
+    </script>
 </body>
 </html>
